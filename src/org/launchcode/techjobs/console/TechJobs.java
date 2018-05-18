@@ -1,8 +1,9 @@
 package org.launchcode.techjobs.console;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import jdk.nashorn.api.tree.WhileLoopTree;
+
+import java.util.*;
+import java.util.Map;
 
 /**
  * Created by LaunchCode
@@ -11,7 +12,7 @@ public class TechJobs {
 
     private static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -61,7 +62,8 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
+                     //System.out.println("Search all fields not yet implemented.");
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -103,7 +105,7 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
@@ -111,6 +113,42 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+        // System.out.println("printJobs is not implemented yet");
+
+        if(someJobs.size() == 0) {
+            System.out.print("No Jobs for your criteria");
+            return;
+        }
+        for (HashMap<String, String> job : someJobs) {
+            String jobListing ="\n*****\n";
+            for (Map.Entry<String, String> jobColumn : job.entrySet()) {
+                jobListing += (jobColumn.getKey() + ": " + jobColumn.getValue() + "\n");
+            }
+
+            jobListing += "*****";
+
+            System.out.println(jobListing);
+
+        }
     }
 }
+
+           /* HashMap<String, String> jobPosting = new HashMap<>(); //(HashMap<String, String>) row.entrySet();
+            jobPosting.put(row.entrySet());
+            System.out.println(jobPosting);
+
+        /*for (int i = 0; i < someJobs.size(); i++) {
+            HashMap<String, String> map = new HashMap<>();
+            Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, String> entry = iterator.next();
+                System.out.println(entry.getKey() + ":" + entry.getValue());
+            }
+            // for (Map.Entry<String, String> job : someJobs.entrySet()) {
+            //     System.out.println(job.getKey() + job.getValue());
+            // }
+        }*/
+
+
+
+
